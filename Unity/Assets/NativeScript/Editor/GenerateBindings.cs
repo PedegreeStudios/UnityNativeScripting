@@ -4163,7 +4163,7 @@ namespace NativeScript.Editor
 					cppMethodName,
 					enclosingTypeIsStatic,
 					// Mark as virtual if method/class is not static or generic
-					cppMethodIsStatic || enclosingTypeIsStatic || methodTypeParams != null? false : true,
+					(enclosingTypeKind == TypeKind.FullStruct || cppMethodIsStatic || enclosingTypeIsStatic || methodTypeParams != null)? false : true,
 					cppMethodIsStatic,
 					cppReturnType,
 					methodTypeParams,

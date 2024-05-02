@@ -307,6 +307,11 @@ namespace System
 
 namespace System
 {
+	struct ISpanFormattable;
+}
+
+namespace System
+{
 	struct IConvertible;
 }
 
@@ -695,6 +700,23 @@ namespace System
 		IFormattable& operator=(IFormattable&& other);
 		bool operator==(const IFormattable& other) const;
 		bool operator!=(const IFormattable& other) const;
+	};
+}
+
+namespace System
+{
+	struct ISpanFormattable : virtual System::Object
+	{
+		ISpanFormattable(decltype(nullptr));
+		ISpanFormattable(Plugin::InternalUse, int32_t handle);
+		ISpanFormattable(const ISpanFormattable& other);
+		ISpanFormattable(ISpanFormattable&& other);
+		virtual ~ISpanFormattable();
+		ISpanFormattable& operator=(const ISpanFormattable& other);
+		ISpanFormattable& operator=(decltype(nullptr));
+		ISpanFormattable& operator=(ISpanFormattable&& other);
+		bool operator==(const ISpanFormattable& other) const;
+		bool operator!=(const ISpanFormattable& other) const;
 	};
 }
 
@@ -1232,12 +1254,13 @@ namespace System
 		Decimal(System::UInt64 value);
 		explicit operator System::ValueType();
 		explicit operator System::Object();
+		explicit operator System::IEquatable_1<System::Decimal>();
+		explicit operator System::IFormattable();
+		explicit operator System::ISpanFormattable();
 		explicit operator System::IComparable();
+		explicit operator System::Runtime::Serialization::IDeserializationCallback();
 		explicit operator System::IComparable_1<System::Decimal>();
 		explicit operator System::IConvertible();
-		explicit operator System::IEquatable_1<System::Decimal>();
-		explicit operator System::Runtime::Serialization::IDeserializationCallback();
-		explicit operator System::IFormattable();
 	};
 }
 
@@ -1254,6 +1277,7 @@ namespace UnityEngine
 		explicit operator System::ValueType();
 		explicit operator System::Object();
 		explicit operator System::IEquatable_1<UnityEngine::Vector3>();
+		explicit operator System::IFormattable();
 	};
 }
 
@@ -1330,7 +1354,7 @@ namespace System
 			bool operator==(const IEnumerator& other) const;
 			bool operator!=(const IEnumerator& other) const;
 			System::Object GetCurrent();
-			System::Boolean MoveNext();
+			virtual System::Boolean MoveNext();
 		};
 	}
 }
@@ -1523,9 +1547,9 @@ namespace UnityEngine
 		explicit operator System::Enum();
 		explicit operator System::ValueType();
 		explicit operator System::Object();
+		explicit operator System::IFormattable();
 		explicit operator System::IComparable();
 		explicit operator System::IConvertible();
-		explicit operator System::IFormattable();
 	};
 }
 

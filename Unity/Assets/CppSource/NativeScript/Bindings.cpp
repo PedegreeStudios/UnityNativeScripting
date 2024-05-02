@@ -1269,6 +1269,87 @@ namespace System
 
 namespace System
 {
+	ISpanFormattable::ISpanFormattable(decltype(nullptr))
+	{
+	}
+	
+	ISpanFormattable::ISpanFormattable(Plugin::InternalUse, int32_t handle)
+	{
+		Handle = handle;
+		if (handle)
+		{
+			Plugin::ReferenceManagedClass(handle);
+		}
+	}
+	
+	ISpanFormattable::ISpanFormattable(const ISpanFormattable& other)
+		: ISpanFormattable(Plugin::InternalUse::Only, other.Handle)
+	{
+	}
+	
+	ISpanFormattable::ISpanFormattable(ISpanFormattable&& other)
+		: ISpanFormattable(Plugin::InternalUse::Only, other.Handle)
+	{
+		other.Handle = 0;
+	}
+	
+	ISpanFormattable::~ISpanFormattable()
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+			Handle = 0;
+		}
+	}
+	
+	ISpanFormattable& ISpanFormattable::operator=(const ISpanFormattable& other)
+	{
+		if (this->Handle)
+		{
+			Plugin::DereferenceManagedClass(this->Handle);
+		}
+		this->Handle = other.Handle;
+		if (this->Handle)
+		{
+			Plugin::ReferenceManagedClass(this->Handle);
+		}
+		return *this;
+	}
+	
+	ISpanFormattable& ISpanFormattable::operator=(decltype(nullptr))
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+			Handle = 0;
+		}
+		return *this;
+	}
+	
+	ISpanFormattable& ISpanFormattable::operator=(ISpanFormattable&& other)
+	{
+		if (Handle)
+		{
+			Plugin::DereferenceManagedClass(Handle);
+		}
+		Handle = other.Handle;
+		other.Handle = 0;
+		return *this;
+	}
+	
+	bool ISpanFormattable::operator==(const ISpanFormattable& other) const
+	{
+		return Handle == other.Handle;
+	}
+	
+	bool ISpanFormattable::operator!=(const ISpanFormattable& other) const
+	{
+		return Handle != other.Handle;
+	}
+}
+
+namespace System
+{
 	IConvertible::IConvertible(decltype(nullptr))
 	{
 	}
@@ -3853,6 +3934,60 @@ namespace System
 		return nullptr;
 	}
 	
+	System::Decimal::operator System::IEquatable_1<System::Decimal>()
+	{
+		int32_t handle = Plugin::BoxDecimal(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		if (handle)
+		{
+			Plugin::ReferenceManagedClass(handle);
+			return System::IEquatable_1<System::Decimal>(Plugin::InternalUse::Only, handle);
+		}
+		return nullptr;
+	}
+	
+	System::Decimal::operator System::IFormattable()
+	{
+		int32_t handle = Plugin::BoxDecimal(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		if (handle)
+		{
+			Plugin::ReferenceManagedClass(handle);
+			return System::IFormattable(Plugin::InternalUse::Only, handle);
+		}
+		return nullptr;
+	}
+	
+	System::Decimal::operator System::ISpanFormattable()
+	{
+		int32_t handle = Plugin::BoxDecimal(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		if (handle)
+		{
+			Plugin::ReferenceManagedClass(handle);
+			return System::ISpanFormattable(Plugin::InternalUse::Only, handle);
+		}
+		return nullptr;
+	}
+	
 	System::Decimal::operator System::IComparable()
 	{
 		int32_t handle = Plugin::BoxDecimal(Handle);
@@ -3867,6 +4002,24 @@ namespace System
 		{
 			Plugin::ReferenceManagedClass(handle);
 			return System::IComparable(Plugin::InternalUse::Only, handle);
+		}
+		return nullptr;
+	}
+	
+	System::Decimal::operator System::Runtime::Serialization::IDeserializationCallback()
+	{
+		int32_t handle = Plugin::BoxDecimal(Handle);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		if (handle)
+		{
+			Plugin::ReferenceManagedClass(handle);
+			return System::Runtime::Serialization::IDeserializationCallback(Plugin::InternalUse::Only, handle);
 		}
 		return nullptr;
 	}
@@ -3903,60 +4056,6 @@ namespace System
 		{
 			Plugin::ReferenceManagedClass(handle);
 			return System::IConvertible(Plugin::InternalUse::Only, handle);
-		}
-		return nullptr;
-	}
-	
-	System::Decimal::operator System::IEquatable_1<System::Decimal>()
-	{
-		int32_t handle = Plugin::BoxDecimal(Handle);
-		if (Plugin::unhandledCsharpException)
-		{
-			System::Exception* ex = Plugin::unhandledCsharpException;
-			Plugin::unhandledCsharpException = nullptr;
-			ex->ThrowReferenceToThis();
-			delete ex;
-		}
-		if (handle)
-		{
-			Plugin::ReferenceManagedClass(handle);
-			return System::IEquatable_1<System::Decimal>(Plugin::InternalUse::Only, handle);
-		}
-		return nullptr;
-	}
-	
-	System::Decimal::operator System::Runtime::Serialization::IDeserializationCallback()
-	{
-		int32_t handle = Plugin::BoxDecimal(Handle);
-		if (Plugin::unhandledCsharpException)
-		{
-			System::Exception* ex = Plugin::unhandledCsharpException;
-			Plugin::unhandledCsharpException = nullptr;
-			ex->ThrowReferenceToThis();
-			delete ex;
-		}
-		if (handle)
-		{
-			Plugin::ReferenceManagedClass(handle);
-			return System::Runtime::Serialization::IDeserializationCallback(Plugin::InternalUse::Only, handle);
-		}
-		return nullptr;
-	}
-	
-	System::Decimal::operator System::IFormattable()
-	{
-		int32_t handle = Plugin::BoxDecimal(Handle);
-		if (Plugin::unhandledCsharpException)
-		{
-			System::Exception* ex = Plugin::unhandledCsharpException;
-			Plugin::unhandledCsharpException = nullptr;
-			ex->ThrowReferenceToThis();
-			delete ex;
-		}
-		if (handle)
-		{
-			Plugin::ReferenceManagedClass(handle);
-			return System::IFormattable(Plugin::InternalUse::Only, handle);
 		}
 		return nullptr;
 	}
@@ -4060,6 +4159,24 @@ namespace UnityEngine
 		{
 			Plugin::ReferenceManagedClass(handle);
 			return System::IEquatable_1<UnityEngine::Vector3>(Plugin::InternalUse::Only, handle);
+		}
+		return nullptr;
+	}
+	
+	UnityEngine::Vector3::operator System::IFormattable()
+	{
+		int32_t handle = Plugin::BoxVector3(*this);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		if (handle)
+		{
+			Plugin::ReferenceManagedClass(handle);
+			return System::IFormattable(Plugin::InternalUse::Only, handle);
 		}
 		return nullptr;
 	}
@@ -5422,6 +5539,24 @@ namespace UnityEngine
 		return nullptr;
 	}
 	
+	UnityEngine::PrimitiveType::operator System::IFormattable()
+	{
+		int32_t handle = Plugin::BoxPrimitiveType(*this);
+		if (Plugin::unhandledCsharpException)
+		{
+			System::Exception* ex = Plugin::unhandledCsharpException;
+			Plugin::unhandledCsharpException = nullptr;
+			ex->ThrowReferenceToThis();
+			delete ex;
+		}
+		if (handle)
+		{
+			Plugin::ReferenceManagedClass(handle);
+			return System::IFormattable(Plugin::InternalUse::Only, handle);
+		}
+		return nullptr;
+	}
+	
 	UnityEngine::PrimitiveType::operator System::IComparable()
 	{
 		int32_t handle = Plugin::BoxPrimitiveType(*this);
@@ -5454,24 +5589,6 @@ namespace UnityEngine
 		{
 			Plugin::ReferenceManagedClass(handle);
 			return System::IConvertible(Plugin::InternalUse::Only, handle);
-		}
-		return nullptr;
-	}
-	
-	UnityEngine::PrimitiveType::operator System::IFormattable()
-	{
-		int32_t handle = Plugin::BoxPrimitiveType(*this);
-		if (Plugin::unhandledCsharpException)
-		{
-			System::Exception* ex = Plugin::unhandledCsharpException;
-			Plugin::unhandledCsharpException = nullptr;
-			ex->ThrowReferenceToThis();
-			delete ex;
-		}
-		if (handle)
-		{
-			Plugin::ReferenceManagedClass(handle);
-			return System::IFormattable(Plugin::InternalUse::Only, handle);
 		}
 		return nullptr;
 	}

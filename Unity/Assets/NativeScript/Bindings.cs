@@ -266,14 +266,15 @@ namespace NativeScript
 		const string PLUGIN_NAME = "NativeScript";
 #endif
 		
-		// Path to load the plugin from when running inside the editor
+				// Path to load the plugin from when running inside the editor
+		const string BASE_PATH = "/" + NativeScriptConstants.BASE_PATH;
 #if UNITY_EDITOR_OSX
-		const string PLUGIN_PATH = "/Plugins/Editor/NativeScript.bundle/Contents/MacOS/NativeScript";
+		const string PLUGIN_PATH = BASE_PATH + "/Plugins/Editor/NativeScript.bundle/Contents/MacOS/NativeScript";
 #elif UNITY_EDITOR_LINUX
-		const string PLUGIN_PATH = "/Plugins/Editor/libNativeScript.so";
+		const string PLUGIN_PATH = BASE_PATH + "/Plugins/Editor/libNativeScript.so";
 #elif UNITY_EDITOR_WIN
-		const string PLUGIN_PATH = "/Plugins/Editor/NativeScript.dll";
-		const string PLUGIN_TEMP_PATH = "/Plugins/Editor/NativeScript_temp.dll";
+		const string PLUGIN_PATH = BASE_PATH + "/Plugins/Editor/NativeScript.dll";
+		const string PLUGIN_TEMP_PATH = BASE_PATH + "/Plugins/Editor/NativeScript_temp.dll";
 #endif
 
 		enum InitMode : byte

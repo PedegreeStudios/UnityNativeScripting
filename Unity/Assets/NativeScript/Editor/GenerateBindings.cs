@@ -292,17 +292,15 @@ namespace NativeScript.Editor
 		static readonly string ProjectDirPath = ProjectDir.FullName;
 		static readonly string CppDirPath =
 			Path.Combine(
-				Path.Combine(
-					Path.Combine(
-						ProjectDirPath,
-						"Assets"),
-					"CppSource"),
+				AssetsDirPath,
+				NativeScriptConstants.BASE_PATH,
+				"CppSource",
 				"NativeScript");
 		static readonly string CsharpPath = Path.Combine(
 			AssetsDirPath,
-			Path.Combine(
-				"NativeScript",
-				"Bindings.cs"));
+			NativeScriptConstants.BASE_PATH,
+			"NativeScript",
+			"Bindings.cs");
 		static readonly string CppHeaderPath = Path.Combine(
 			CppDirPath,
 			"Bindings.h");
@@ -636,6 +634,7 @@ namespace NativeScript.Editor
 		{
 			string jsonPath = Path.Combine(
 				Application.dataPath,
+				NativeScriptConstants.BASE_PATH,
 				NativeScriptConstants.JSON_CONFIG_PATH);
 			string json = File.ReadAllText(jsonPath);
 			return JsonUtility.FromJson<JsonDocument>(json);
@@ -716,7 +715,7 @@ namespace NativeScript.Editor
 #endif
 			assemblies[31] = typeof(Canvas).Assembly; // Unity UI module
 #if UNITY_2020_1_OR_NEWER
-			assemblies[32] = typeof(UnityEngine.Networking.Utility).Assembly; // Unity network module
+			// assemblies[32] = typeof(UnityEngine.Networking.Utility).Assembly; // Unity network module
 #else
 			assemblies[32] = typeof(UnityEngine.Networking.NetworkTransport).Assembly; // Unity network module
 #endif
@@ -781,7 +780,7 @@ namespace NativeScript.Editor
 			// Search all assemblies for the type
 			foreach (Assembly assembly in assemblies)
 			{
-				Type type = assembly.GetType(typeName);
+				Type type = assembly?.GetType(typeName);
 				if (type != null)
 				{
 					return type;

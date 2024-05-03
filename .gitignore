@@ -3,3 +3,6 @@
 
 # Unity upgrade logs
 Unity/Logs
+
+# MacOS
+.DS_Store

@@ -55,10 +55,6 @@ elseif (WIN32 OR (${CMAKE_SYSTEM_NAME} MATCHES "Darwin") OR (${CMAKE_SYSTEM_NAME
 	endif()
 endif()
 
-# Set the directories for NativeScript and game C++ as include directories
-include_directories(
-	${CMAKE_SOURCE_DIR}/NativeScript
-	${CMAKE_SOURCE_DIR}/Game)
 
 # Set all .cpp files for NativeScript and the game as sources
 file(GLOB GAMESOURCEFILES ${CMAKE_SOURCE_DIR}/Game/*.cpp)
@@ -74,6 +70,14 @@ set(
 
 # Build a library. If on an Apple platform, build it in a bundle.
 add_library(${PROJECT_NAME} MODULE ${SOURCES})
+
+# Set the directories for NativeScript and game C++ as include directories
+target_include_directories(${PROJECT_NAME}
+	PUBLIC
+		${CMAKE_SOURCE_DIR}/NativeScript
+		${CMAKE_SOURCE_DIR}/Game
+)
+
 set_target_properties(${PROJECT_NAME} PROPERTIES BUNDLE TRUE)
 if (IOS)
 	set_xcode_property(${PROJECT_NAME} ENABLE_BITCODE "NO")
